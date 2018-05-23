@@ -1,0 +1,9 @@
+<resources>
+    <string name="app_name">ArduinoBLE_library_test</string>
+    <string name="title_activity_device_control">DeviceControlActivity</string>
+    <string name="txt_data">Valore letto:</string>
+    <string name="txt_device_address">Indirizzo dispositivo:</string>
+    <string name="txt_state">Stato:</string>
+    <string name="btn_rx">Ricevi dato</string>
+    <string name="btn_tx">Invia dato</string>
+</resources>
