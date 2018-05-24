@@ -10,6 +10,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
@@ -24,6 +25,7 @@ public class MainActivity extends AppCompatActivity {
 
     private Button btnStop;
     private Button btnStart;
+    private Button btnScan;
     private ListView lviewDevices;
     private ArrayAdapter mAdapter;
     private ArrayList<String> lviewArray;
@@ -53,7 +55,6 @@ public class MainActivity extends AppCompatActivity {
                 enableButton(btnStop);
             }
         });
-
         btnStop.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -108,7 +109,19 @@ public class MainActivity extends AppCompatActivity {
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.activity_main_menu, menu);
+        btnScan = this.findViewById(R.id.btn_scan);
         return super.onCreateOptionsMenu(menu);
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case R.id.btn_scan:
+                item.setTitle("stop");
+                Log.d("a", "boooh");
+                break;
+        }
+        return true;
     }
 
     //chiede all'utente il permesso di utilizzare la posizione
