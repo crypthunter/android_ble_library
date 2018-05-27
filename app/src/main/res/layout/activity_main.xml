@@ -17,20 +17,6 @@
         app:layout_constraintVertical_bias="0.0"
         tools:layout_editor_absoluteX="1dp">
 
-        <Button
-            android:id="@+id/btn_start"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="start scan" />
-
-        <Button
-            android:id="@+id/btn_stop"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="stop scan"
-            tools:layout_editor_absoluteX="142dp"
-            tools:layout_editor_absoluteY="196dp" />
-
         <ListView
             android:id="@+id/lview_devices"
             android:layout_width="match_parent"

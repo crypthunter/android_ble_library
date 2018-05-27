@@ -11,6 +11,9 @@ import android.content.IntentFilter;
 import android.content.ServiceConnection;
 import android.os.IBinder;
 import android.util.Log;
+
+import org.greenrobot.eventbus.EventBus;
+
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -60,21 +63,22 @@ public class BleConnect {
             final String action = intent.getAction();
             if (BluetoothLeService.ACTION_GATT_CONNECTED.equals(action)) {
                 mConnected = true;
-                //updateConnectionState(R.string.connected);
                 Log.d("BleConnect", "connesso");
+                EventBus.getDefault().post(new EventConnection("connesso"));
             } else if (BluetoothLeService.ACTION_GATT_DISCONNECTED.equals(action)) {
                 mConnected = false;
-                //updateConnectionState(R.string.disconnected);
                 Log.d("BleConnect", "disconnesso");
+                EventBus.getDefault().post(new EventConnection("disconnesso"));
             } else if (BluetoothLeService.ACTION_GATT_SERVICES_DISCOVERED.equals(action)) {
                 // Show all the supported services and characteristics on the user interface.
                 displayGattServices(mBluetoothLeService.getSupportedGattServices());
                 Log.d("BleConnect", "servizio scoperto");
-                //riceve dato e abilita notifiche per ricevere il dato ogni volta che arduino invia (anche se è uguale)
+                //abilita notifiche per ricevere il dato ogni volta che arduino invia (anche se è uguale)
                 enableNotification(true);
             } else if (BluetoothLeService.ACTION_DATA_AVAILABLE.equals(action)) {
                 data = intent.getStringExtra(mBluetoothLeService.EXTRA_DATA);
                 Log.d("BleConnect", "dato letto = " + data);
+                EventBus.getDefault().post(new EventData(data));
             }
         }
     };
@@ -95,6 +99,11 @@ public class BleConnect {
         boolean b = mBluetoothLeService.connect(mDeviceAddress);
         mConnected = b;
         Log.d("BleConnect", "connesso = " + b);
+    }
+
+    public void disconnect()
+    {
+        mBluetoothLeService.disconnect();
     }
 
     //serve per far funzionare BroadCast receiver

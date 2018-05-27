@@ -23,8 +23,6 @@ import java.util.ArrayList;
 
 public class MainActivity extends AppCompatActivity {
 
-    private Button btnStop;
-    private Button btnStart;
     private Button btnScan;
     private ListView lviewDevices;
     private ArrayAdapter mAdapter;
@@ -38,39 +36,12 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
         //libreria bluetooth
         bleSearch = new BleSearch(this);
-        //elementi UI
-        btnStop = this.findViewById(R.id.btn_stop);
-        btnStart = this.findViewById(R.id.btn_start);
 
+        //list view che contiene i dispositivi
         lviewDevices = findViewById(R.id.lview_devices);
         lviewArray = new ArrayList<>();
         mAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, lviewArray );
         lviewDevices.setAdapter(mAdapter);
-
-        btnStart.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                bleSearch.startScan();
-                disableButton(btnStart);
-                enableButton(btnStop);
-            }
-        });
-        btnStop.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                bleSearch.stopScan();
-                disableButton(btnStop);
-                enableButton(btnStart);
-                //rimuovo i vecchi elementi dalla listview
-                mAdapter.clear();
-                //aggiungo i nuovi elementi
-                for(int i = 0; i < bleSearch.devicesNumber(); i++)
-                {
-                    lviewArray.add(bleSearch.getDevice(i).getName());
-                }
-                mAdapter.notifyDataSetChanged();
-            }
-        });
 
     //quando schiaccio un elemento della lista
     lviewDevices.setOnItemClickListener(new AdapterView.OnItemClickListener() {
@@ -89,14 +60,11 @@ public class MainActivity extends AppCompatActivity {
         });
 
         askGpsPermission();
-        disableButton(btnStop);
     }
 
     @Override
     protected void onPause() {
         bleSearch.stopScan();
-        disableButton(btnStop);
-        enableButton(btnStart);
         super.onPause();
     }
 
@@ -117,8 +85,25 @@ public class MainActivity extends AppCompatActivity {
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
             case R.id.btn_scan:
-                item.setTitle("stop");
-                Log.d("a", "boooh");
+                if(!bleSearch.isScanning())
+                {
+                    item.setTitle("stop");
+                    bleSearch.startScan();
+                }
+                else
+                {
+                    item.setTitle("start");
+                    bleSearch.stopScan();
+                    //rimuovo i vecchi elementi dalla listview
+                    mAdapter.clear();
+                    //aggiungo i nuovi elementi
+                    for(int i = 0; i < bleSearch.devicesNumber(); i++)
+                    {
+                        lviewArray.add(bleSearch.getDevice(i).getName());
+                    }
+                    mAdapter.notifyDataSetChanged();
+                }
+
                 break;
         }
         return true;
@@ -140,17 +125,5 @@ public class MainActivity extends AppCompatActivity {
             });
             builder.show();
         }
-    }
-
-    public void disableButton(Button b)
-    {
-        b.setAlpha(.5f);
-        b.setClickable(false);
-    }
-
-    public void enableButton(Button b)
-    {
-        b.setAlpha(1);
-        b.setClickable(true);
     }
 }
