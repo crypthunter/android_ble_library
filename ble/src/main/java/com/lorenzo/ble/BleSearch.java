@@ -9,6 +9,8 @@ import android.content.pm.PackageManager;
 import android.os.Handler;
 import android.util.Log;
 
+import org.greenrobot.eventbus.EventBus;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -118,6 +120,7 @@ public class BleSearch {
             Log.d("BleSearch", "dispositivo sconosciuto ignorato");
         else if(!leDeviceList.contains(device)) {
             leDeviceList.add(device);
+            EventBus.getDefault().post(new EventDiscovered(device.getName()));
             Log.d("BleSearch",device.getName());
         }
     }

@@ -8,6 +8,7 @@ import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.EventLog;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -18,6 +19,12 @@ import android.widget.Button;
 import android.widget.ListView;
 //import della libreria per il bluetooth low energy
 import com.lorenzo.ble.BleSearch;
+import com.lorenzo.ble.EventConnection;
+import com.lorenzo.ble.EventDiscovered;
+
+import org.greenrobot.eventbus.EventBus;
+import org.greenrobot.eventbus.Subscribe;
+import org.greenrobot.eventbus.ThreadMode;
 
 import java.util.ArrayList;
 
@@ -69,6 +76,18 @@ public class MainActivity extends AppCompatActivity {
     }
 
     @Override
+    public void onStart() {
+        super.onStart();
+        EventBus.getDefault().register(this);
+    }
+
+    @Override
+    public void onStop() {
+        EventBus.getDefault().unregister(this);
+        super.onStop();
+    }
+
+    @Override
     protected void onDestroy() {
         bleSearch.stopScan();
         super.onDestroy();
@@ -90,23 +109,30 @@ public class MainActivity extends AppCompatActivity {
                     item.setTitle("stop");
                     bleSearch.startScan();
                 }
-                else
+               else
                 {
                     item.setTitle("start");
                     bleSearch.stopScan();
-                    //rimuovo i vecchi elementi dalla listview
+                    /*//rimuovo i vecchi elementi dalla listview
                     mAdapter.clear();
                     //aggiungo i nuovi elementi
                     for(int i = 0; i < bleSearch.devicesNumber(); i++)
                     {
                         lviewArray.add(bleSearch.getDevice(i).getName());
                     }
-                    mAdapter.notifyDataSetChanged();
+                    mAdapter.notifyDataSetChanged();*/
                 }
 
                 break;
         }
         return true;
+    }
+
+    //evento che si verifica quando viene trovato un nuovo dispositivo
+    @Subscribe(threadMode = ThreadMode.MAIN)
+    public void onMessageEvent(EventDiscovered event) {
+        lviewArray.add(event.message);
+        mAdapter.notifyDataSetChanged();
     }
 
     //chiede all'utente il permesso di utilizzare la posizione

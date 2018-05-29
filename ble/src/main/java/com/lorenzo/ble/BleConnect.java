@@ -142,7 +142,7 @@ public class BleConnect {
             currentServiceData.put(LIST_UUID, uuid);
             gattServiceData.add(currentServiceData);
 
-            //get delle caratteristiche per leggere e scrivere quando corrispondono ai rispettivi UUID
+            //get delle caratteristiche per leggere e scrivere quando corrispondono ai rispettivi UUID, andrebbe fatto un if per i diversi dispositivi
             characteristicTX = gattService.getCharacteristic(BluetoothLeService.UUID_HC_08_RX_TX);
             characteristicRX = gattService.getCharacteristic(BluetoothLeService.UUID_HC_08_RX_TX);
         }
