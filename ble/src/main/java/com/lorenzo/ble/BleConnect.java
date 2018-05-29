@@ -70,14 +70,15 @@ public class BleConnect {
                 Log.d("BleConnect", "disconnesso");
                 EventBus.getDefault().post(new EventConnection("disconnesso"));
             } else if (BluetoothLeService.ACTION_GATT_SERVICES_DISCOVERED.equals(action)) {
-                // Show all the supported services and characteristics on the user interface.
+                //trova tutti i servizi supportati
                 displayGattServices(mBluetoothLeService.getSupportedGattServices());
                 Log.d("BleConnect", "servizio scoperto");
-                //abilita notifiche per ricevere il dato ogni volta che arduino invia (anche se è uguale)
+                //abilita notifiche per ricevere il dato ogni volta che il dispositivo ble invia
                 enableNotification(true);
             } else if (BluetoothLeService.ACTION_DATA_AVAILABLE.equals(action)) {
                 data = intent.getStringExtra(mBluetoothLeService.EXTRA_DATA);
                 Log.d("BleConnect", "dato letto = " + data);
+                //posta il dato ricevuto dal bluetooth che può essere poi recuperato nella main activity
                 EventBus.getDefault().post(new EventData(data));
             }
         }

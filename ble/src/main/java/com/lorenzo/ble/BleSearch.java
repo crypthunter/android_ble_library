@@ -24,15 +24,12 @@ public class BleSearch {
     private BluetoothAdapter mBluetoothAdapter;
     //per verificare se sto cercando
     private boolean mScanning;
-    //serve per far partire un thread dopo un certo intervallo di tempo, nel caso sia attivo lo stop automatico
-    private Handler mHandler;
     //contesto dell'activity in cui viene usata la libreria
     Context mContext;
 
     public BleSearch(Context mContext)
     {
         this.mContext = mContext;
-        mHandler = new Handler();
         bluetoothManager = (BluetoothManager) mContext.getSystemService(Context.BLUETOOTH_SERVICE);
         mBluetoothAdapter = bluetoothManager.getAdapter();
         leDeviceList = new ArrayList<>();
@@ -62,28 +59,6 @@ public class BleSearch {
     {
         return mScanning;
     }
-
-
-    //fa partire o ferma la scansione
-    /*public void scanLeDevice(final boolean enable, long scanPeriod) {
-        if (enable) {
-            leDeviceList.clear();
-            //ferma la scansione dopo un intervallo di tempo scelto
-            mHandler.postDelayed(new Runnable() {
-                @Override
-                public void run() {
-                    mScanning = false;
-                    mBluetoothAdapter.stopLeScan(mLeScanCallback);
-                }
-            }, scanPeriod);
-
-            mScanning = true;
-            mBluetoothAdapter.startLeScan(mLeScanCallback);
-        } else {
-            mScanning = false;
-            mBluetoothAdapter.stopLeScan(mLeScanCallback);
-        }
-    }*/
 
     //fa partire la scansione
     public void startScan()

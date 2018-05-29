@@ -44,7 +44,7 @@ public class MainActivity extends AppCompatActivity {
         //libreria bluetooth
         bleSearch = new BleSearch(this);
 
-        //list view che contiene i dispositivi
+        //list view che contiene i dispositivi trovati
         lviewDevices = findViewById(R.id.lview_devices);
         lviewArray = new ArrayList<>();
         mAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, lviewArray );
@@ -113,16 +113,8 @@ public class MainActivity extends AppCompatActivity {
                 {
                     item.setTitle("start");
                     bleSearch.stopScan();
-                    /*//rimuovo i vecchi elementi dalla listview
                     mAdapter.clear();
-                    //aggiungo i nuovi elementi
-                    for(int i = 0; i < bleSearch.devicesNumber(); i++)
-                    {
-                        lviewArray.add(bleSearch.getDevice(i).getName());
-                    }
-                    mAdapter.notifyDataSetChanged();*/
                 }
-
                 break;
         }
         return true;

@@ -44,9 +44,10 @@ public class DeviceControlActivity extends AppCompatActivity {
         final Intent intent = getIntent();
         deviceName = intent.getStringExtra(EXTRAS_DEVICE_NAME);
         deviceAddress = intent.getStringExtra(EXTRAS_DEVICE_ADDRESS);
+        //imposto il titolo dell'action bar
         getSupportActionBar().setTitle(deviceName);
         txtAddress.setText(deviceAddress);
-
+        //libreria bluetooth
         bc = new BleConnect(deviceName, deviceAddress, this);
 
         btnRead.setOnClickListener(new View.OnClickListener() {
@@ -59,6 +60,7 @@ public class DeviceControlActivity extends AppCompatActivity {
         btnWrite.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                //quando arduino riceve il valore 1 accende un led
                 bc.write("1");
             }
         });
