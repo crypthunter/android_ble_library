@@ -12,7 +12,7 @@ public class GattAttributes {
     public static String HC_08_RX_TX = "0000ffe1-0000-1000-8000-00805f9b34fb";
     static {
         //servizi hc-08
-        attributes.put("0000ffe0-0000-1000-8000-00805f9b34fb", "Seriale HC - 08");
+        attributes.put("0000ffe0-0000-1000-8000-00805f9b34fb", "HC-08 serial");
         attributes.put("00001800-0000-1000-8000-00805f9b34fb", "Device Information Service");
         //caratteristiche hc-08
         attributes.put(HC_08_RX_TX,"RX/TX data");

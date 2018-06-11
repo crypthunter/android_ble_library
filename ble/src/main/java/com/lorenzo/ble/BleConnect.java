@@ -55,7 +55,7 @@ public class BleConnect {
     // Gestisce vari eventi attivati dal servizio BLE
     // ACTION_GATT_CONNECTED: connesso ad un server GATT
     // ACTION_GATT_DISCONNECTED: disconnesso da un server GATT
-    // ACTION_GATT_SERVICES_DISCOVERED: scoperti servixi GATT
+    // ACTION_GATT_SERVICES_DISCOVERED: scoperti servizi GATT
     // ACTION_DATA_AVAILABLE: ricevuto un dato: è il risultato di una notifica o di una lettura
     private final BroadcastReceiver mGattUpdateReceiver = new BroadcastReceiver() {
         @Override
@@ -143,7 +143,7 @@ public class BleConnect {
             currentServiceData.put(LIST_UUID, uuid);
             gattServiceData.add(currentServiceData);
 
-            //get delle caratteristiche per leggere e scrivere quando corrispondono ai rispettivi UUID, andrebbe fatto un if per i diversi dispositivi
+            //get delle caratteristiche per leggere e scrivere quando corrispondono ai rispettivi UUID (andrebbe fatto un if per i diversi dispositivi)
             characteristicTX = gattService.getCharacteristic(BluetoothLeService.UUID_HC_08_RX_TX);
             characteristicRX = gattService.getCharacteristic(BluetoothLeService.UUID_HC_08_RX_TX);
         }

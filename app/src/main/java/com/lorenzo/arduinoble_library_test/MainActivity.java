@@ -41,11 +41,12 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        //libreria bluetooth
+        //istanza della libreria bluetooth per la ricerca
         bleSearch = new BleSearch(this);
 
         //list view che contiene i dispositivi trovati
         lviewDevices = findViewById(R.id.lview_devices);
+        //arraylist vuoto usato per inizializzare la lista
         lviewArray = new ArrayList<>();
         mAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, lviewArray );
         lviewDevices.setAdapter(mAdapter);

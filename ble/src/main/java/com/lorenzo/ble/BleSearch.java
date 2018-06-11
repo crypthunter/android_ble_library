@@ -75,7 +75,7 @@ public class BleSearch {
         mBluetoothAdapter.stopLeScan(mLeScanCallback);
     }
 
-    //quando trova un dispositivo
+    //callback quando trova un dispositivo
     private BluetoothAdapter.LeScanCallback mLeScanCallback =
             new BluetoothAdapter.LeScanCallback() {
                 @Override
